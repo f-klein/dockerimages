@@ -13,12 +13,16 @@ pipeline {
 			steps {
 				sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
 
-				step([$class:				'DockerBuilderPublisher',
-					cleanImages:			true,
-					dockerFileDirectory:		'./alpine',
-					pushOnSuccess:			true,
-					tagsString:			'kleinf/alpine:${TODAY}'
-				])
+				script {
+					def alpine = docker.build("kleinf/alpine", "./alpine")
+				}
+			}
+		}
+		stage('Test Alpine image') {
+			steps {
+				alpine.inside {
+					sh 'echo "Tests passed"'
+				}
 			}
 		}
 	}
