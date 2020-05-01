@@ -25,7 +25,7 @@ pipeline {
 
   stage('Test Alpine image') {
    steps {
-    sh 'docker run --rm -ti kleinf/alpine:${TODAY} echo "Test passed."'
+    sh 'docker run --rm kleinf/alpine:${TODAY} echo "Test passed."'
    }
   }
   stage('Removing temporary Docker images') {
