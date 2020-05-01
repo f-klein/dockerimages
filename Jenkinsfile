@@ -26,7 +26,7 @@ pipeline {
   stage('Test Alpine image') {
    agent {
     docker {
-     image "kleinf/alpine:${TODAY}"
+     image "kleinf/alpine:latest"
     }
    }
    steps {
