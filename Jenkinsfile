@@ -16,15 +16,12 @@ pipeline {
   }
 
   stage('Build Alpine base image') {
-   agent {
-    dockerfile {
-     dir "./alpine"
-     label "kleinf/alpine:${TODAY}"
-    }
-   }
-
    steps {
-    sh 'echo "Test passed."'
+    dir("./alpine") {
+     script {
+      sh "docker build -t kleinf/alpine:${TODAY} ."
+     }
+    }
    }
   }
 
