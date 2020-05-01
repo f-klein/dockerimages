@@ -11,6 +11,13 @@ pipeline {
   IMAGE		= "alpine"
  }
 
+ options {
+  disableConcurrentBuilds()
+  skipDefaultCheckout()
+  timeout(time: 10, unit: 'MINUTES)
+  timestamps()
+ }
+
  stages {
   stage('Show environment') {
    steps {
