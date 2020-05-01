@@ -42,6 +42,9 @@ stage('Build Docker images') {
     }
    }
 
+stage('Sequential build') {
+stages {
+
    stage('Build Docker image') {
     steps {
      script {
@@ -71,6 +74,8 @@ stage('Build Docker images') {
     }
    }
   }
+}
+}
  }
  }
  }
