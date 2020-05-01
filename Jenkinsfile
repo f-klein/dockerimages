@@ -18,7 +18,7 @@ pipeline {
   stage('Build Alpine base image') {
    steps {
     script {
-     sh "docker build --rm --force-rm -t kleinf/alpine:${TODAY} ./alpine"
+     docker.build("kleinf/alpine", "--rm", "--force-rm", "./alpine")
     }
    }
   }
