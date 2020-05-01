@@ -40,6 +40,7 @@ stage('Build Docker images') {
      echo "Today = $TODAY"
      echo "Prefix = ${params.PREFIX}"
      echo "Push = ${params.PUSH}"
+     sh "printenv"
     }
    }
 
