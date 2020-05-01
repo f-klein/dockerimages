@@ -28,7 +28,17 @@ pipeline {
     sh 'docker run --rm kleinf/alpine:${TODAY} echo "Test passed."'
    }
   }
-  stage('Removing temporary Docker images') {
+  stage('Push Docker images to repository') {
+   steps {
+    script {
+     def alpine = docker.image("kleinf/alpine:${TODAY}")
+     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+      alpine.push()
+     }
+    }
+   }
+  }
+  stage('Remove temporary Docker images') {
    steps {
     sh 'docker image prune -f'
    }
