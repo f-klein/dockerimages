@@ -59,7 +59,7 @@ stage('Build Docker images') {
 
    stage('Push Docker images to repository') {
     when {
-     environment name: 'PUSH', value: 'true'
+     environment name: 'params.PUSH', value: 'true'
     }
     steps {
      script {
