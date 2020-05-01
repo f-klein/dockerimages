@@ -13,9 +13,10 @@ pipeline {
    steps {
     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
 
-    dir("./alpine") {
-     script {
-      docker.build("kleinf/alpine:${TODAY} .")
+    agent {
+     dockerfile {
+      dir "./alpine"
+      label "kleinf/alpine:${TODAY}"
      }
     }
    }
