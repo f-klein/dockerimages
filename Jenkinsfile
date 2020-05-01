@@ -14,7 +14,7 @@ pipeline {
     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
 
     script {
-     def alpine = docker.build("kleinf/alpine:${TODAY}", "--force-rm ./alpine")
+     def alpine = docker.build("kleinf/alpine:${TODAY}", "--force-rm", "./alpine")
     }
    }
   }
