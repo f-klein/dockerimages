@@ -36,7 +36,7 @@ stage('Build Docker images') {
   stages {
    stage('Show environment') {
     steps {
-     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY, Push = $PUSH"'
+     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY, Prefix = ${params.PREFIX}, Push = ${params.PUSH}"'
     }
    }
 
