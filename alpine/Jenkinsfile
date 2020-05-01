@@ -6,7 +6,10 @@ node {
 	}
 
 	environment {
-		DAILYTAG="${sh(date +%Y%m%d)}"
+		DAILYTAG="""${sh(
+			returnStdout: true,
+			script: 'date +%Y%m%d'
+		)}"""
 	}
 
 	def alpine
