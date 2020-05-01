@@ -9,15 +9,16 @@ pipeline {
  }
 
  stages {
-  stage('Build Alpine base image') {
+  stage('Show environment') {
    steps {
     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
+   }
 
-    agent {
-     dockerfile {
-      dir "./alpine"
-      label "kleinf/alpine:${TODAY}"
-     }
+  stage('Build Alpine base image') {
+   agent {
+    dockerfile {
+     dir "./alpine"
+     label "kleinf/alpine:${TODAY}"
     }
    }
   }
