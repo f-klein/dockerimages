@@ -67,6 +67,7 @@ stage('Build Docker images') {
        dockerimage.push()
       }
      }
+     sh 'docker rmi -f registry.hub.docker.com/${PREFIX}/${IMAGE}:${TODAY} || true'
     }
    }
   }
@@ -76,7 +77,6 @@ stage('Build Docker images') {
 
  post {
   cleanup {
-   sh 'docker rmi -f registry.hub.docker.com/${PREFIX}/${IMAGE}:${TODAY} || true'
    sh 'docker image prune -f'
   }
  }
