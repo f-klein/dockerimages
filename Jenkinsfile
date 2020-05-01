@@ -13,11 +13,14 @@ pipeline {
    steps {
     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
 
+    dir("./alpine")
+
     script {
-     docker.build("kleinf/alpine:${TODAY}", "./alpine")
+     docker.build("kleinf/alpine:${TODAY} .")
     }
    }
   }
+
   stage('Test Alpine image') {
    agent {
     docker {
