@@ -22,6 +22,8 @@ pipeline {
   timestamps()
  }
 
+stages {
+
  matrix {
   axes {
    axis {
@@ -65,6 +67,7 @@ pipeline {
     }
    }
   }
+ }
  }
 
  post {
