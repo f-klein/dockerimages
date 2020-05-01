@@ -20,8 +20,10 @@ pipeline {
 		}
 		stage('Test Alpine image') {
 			steps {
-				alpine.inside {
-					sh 'echo "Tests passed"'
+				script {
+					alpine.inside {
+						sh 'echo "Tests passed"'
+					}
 				}
 			}
 		}
