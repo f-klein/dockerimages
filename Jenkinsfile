@@ -17,7 +17,7 @@ pipeline {
 					cleanImages:			true,
 					dockerFileDirectory:		'./alpine',
 					pushOnSuccess:			true,
-					tagsString:			kleinf/alpine:${TODAY}
+					tagsString:			'kleinf/alpine:${TODAY}'
 				])
 			}
 		}
