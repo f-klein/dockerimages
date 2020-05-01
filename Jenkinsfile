@@ -14,9 +14,9 @@ pipeline {
  }
 
  options {
-  disableConcurrentBuilds()
+  // disableConcurrentBuilds()
   // skipDefaultCheckout()
-  timeout(time: 10, unit: 'MINUTES')
+  timeout(time: 2, unit: 'MINUTES')
   timestamps()
  }
 
@@ -38,14 +38,7 @@ stages {
 
    stage('Build Docker image') {
     steps {
-     script {
-      sh "docker build --no-cache --rm --force-rm -t ${PREFIX}/${IMAGE}:${TODAY} -t ${PREFIX}/${IMAGE}:latest ./${IMAGE}"
-     }
-    }
-   }
-
-   stage('Test Docker image') {
-    steps {
+     sh "docker build --no-cache --rm --force-rm -t ${PREFIX}/${IMAGE}:${TODAY} -t ${PREFIX}/${IMAGE}:latest ./${IMAGE}"
      sh 'docker run --entrypoint="" --rm ${PREFIX}/${IMAGE}:${TODAY} /bin/echo OK'
     }
    }
