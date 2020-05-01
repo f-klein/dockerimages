@@ -36,7 +36,7 @@ stage('Build Docker images') {
   stages {
    stage('Show environment') {
     steps {
-     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
+     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY, Push = $PUSH"'
     }
    }
 
@@ -56,7 +56,7 @@ stage('Build Docker images') {
 
    stage('Push Docker images to repository') {
     when {
-     environment name: 'PUSH', value: true
+     environment name: 'PUSH', value: 'true'
     }
     steps {
      script {
