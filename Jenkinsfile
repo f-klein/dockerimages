@@ -14,5 +14,13 @@ pipeline {
 				sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
 			}
 		}
+
+		def alpine
+
+		stage('Build image') {
+			steps {
+				alpine = docker.build("kleinf/alpine", "./alpine")
+			}
+		}
 	}
 }
