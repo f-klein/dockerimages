@@ -22,6 +22,10 @@ pipeline {
      label "kleinf/alpine:${TODAY}"
     }
    }
+
+   steps {
+    sh 'echo "Test passed."'
+   }
   }
 
   stage('Test Alpine image') {
