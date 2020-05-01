@@ -6,8 +6,9 @@ pipeline {
    returnStdout: true,
    script: '/bin/echo -ne `date +%Y%m%d`'
   )}"""
-  PREFIX = "kleinf"
-  IMAGE = "alpine"
+
+  PREFIX	= "kleinf"
+  IMAGE		= "alpine"
  }
 
  stages {
@@ -25,11 +26,12 @@ pipeline {
    }
   }
 
-  stage('Test Alpine image') {
+  stage('Test Docker image') {
    steps {
     sh 'docker run --rm ${PREFIX}/${IMAGE}:${TODAY} echo "Test passed."'
    }
   }
+
   stage('Push Docker images to repository') {
    steps {
     script {
@@ -40,11 +42,12 @@ pipeline {
     }
    }
   }
-  stage('Remove temporary Docker images') {
-   steps {
-    sh 'docker rmi -f registry.hub.docker.com/${PREFIX}/${IMAGE}:${TODAY} || true'
-    sh 'docker image prune -f'
-   }
+ }
+
+ post {
+  cleanup {
+   sh 'docker rmi -f registry.hub.docker.com/${PREFIX}/${IMAGE}:${TODAY} || true'
+   sh 'docker image prune -f'
   }
  }
 }
