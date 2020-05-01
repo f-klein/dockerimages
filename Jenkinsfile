@@ -11,7 +11,7 @@ pipeline {
 	stages {
 		stage('Print environment') {
 			steps {
-				sh 'printenv'
+				sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
 			}
 		}
 	}
