@@ -9,16 +9,11 @@ pipeline {
 	}
 
 	stages {
-		stage('Print environment') {
+		stage('Build Alpine base image') {
+			def alpine
+
 			steps {
 				sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
-			}
-		}
-
-		def alpine
-
-		stage('Build image') {
-			steps {
 				alpine = docker.build("kleinf/alpine", "./alpine")
 			}
 		}
