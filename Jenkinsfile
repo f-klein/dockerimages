@@ -13,6 +13,7 @@ pipeline {
    steps {
     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
    }
+  }
 
   stage('Build Alpine base image') {
    agent {
