@@ -6,6 +6,8 @@ pipeline {
    returnStdout: true,
    script: '/bin/echo -ne `date +%Y%m%d`'
   )}"""
+  PREFIX = "kleinf"
+  IMAGE = "alpine"
  }
 
  stages {
@@ -15,31 +17,32 @@ pipeline {
    }
   }
 
-  stage('Build Alpine base image') {
+  stage('Build Docker image') {
    steps {
     script {
-     sh "docker build --no-cache --rm --force-rm -t kleinf/alpine:${TODAY} ./alpine"
+     sh "docker build --no-cache --rm --force-rm -t ${PREFIX}/${IMAGE}:${TODAY} ./${IMAGE}"
     }
    }
   }
 
   stage('Test Alpine image') {
    steps {
-    sh 'docker run --rm kleinf/alpine:${TODAY} echo "Test passed."'
+    sh 'docker run --rm ${PREFIX}/${IMAGE}:${TODAY} echo "Test passed."'
    }
   }
   stage('Push Docker images to repository') {
    steps {
     script {
-     def alpine = docker.image("kleinf/alpine:${TODAY}")
+     def dockerimage = docker.image("${PREFIX}/${IMAGE}:${TODAY}")
      docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-      alpine.push()
+      dockerimage.push()
      }
     }
    }
   }
   stage('Remove temporary Docker images') {
    steps {
+    sh 'docker rmi -f registry.hub.docker.com/${PREFIX}/${IMAGE}:${TODAY} || true'
     sh 'docker image prune -f'
    }
   }
