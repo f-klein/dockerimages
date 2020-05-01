@@ -8,7 +8,11 @@ pipeline {
   )}"""
 
   PREFIX	= "kleinf"
-  IMAGE		= "alpine"
+ }
+
+ parameters {
+  string(name: 'PREFIX', defaultValue: 'kleinf', description: 'Docker Hub prefix')
+  booleanParam(name: 'PUSH', defaultValue: true, description: 'Upload to Docker Hub')
  }
 
  options {
@@ -18,33 +22,45 @@ pipeline {
   timestamps()
  }
 
- stages {
-  stage('Show environment') {
-   steps {
-    sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
+ matrix {
+  axes {
+   axis {
+    name: 'IMAGE'
+    values 'alpine'
    }
   }
 
-  stage('Build Docker image') {
-   steps {
-    script {
-     sh "docker build --no-cache --rm --force-rm -t ${PREFIX}/${IMAGE}:${TODAY} ./${IMAGE}"
+  stages {
+   stage('Show environment') {
+    steps {
+     sh 'echo "Job base name = $JOB_BASE_NAME, Today = $TODAY"'
     }
    }
-  }
 
-  stage('Test Docker image') {
-   steps {
-    sh 'docker run --rm ${PREFIX}/${IMAGE}:${TODAY} echo "Test passed."'
+   stage('Build Docker image') {
+    steps {
+     script {
+      sh "docker build --no-cache --rm --force-rm -t ${PREFIX}/${IMAGE}:${TODAY} ./${IMAGE}"
+     }
+    }
    }
-  }
 
-  stage('Push Docker images to repository') {
-   steps {
-    script {
-     def dockerimage = docker.image("${PREFIX}/${IMAGE}:${TODAY}")
-     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-      dockerimage.push()
+   stage('Test Docker image') {
+    steps {
+     sh 'docker run --rm ${PREFIX}/${IMAGE}:${TODAY} /bin/busybox id'
+    }
+   }
+
+   stage('Push Docker images to repository') {
+    when {
+     environment name: 'PUSH', value: true
+    }
+    steps {
+     script {
+      def dockerimage = docker.image("${PREFIX}/${IMAGE}:${TODAY}")
+      docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+       dockerimage.push()
+      }
      }
     }
    }
