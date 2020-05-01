@@ -28,7 +28,7 @@ stage('Build Docker images') {
  matrix {
   axes {
    axis {
-    name: 'IMAGE'
+    name 'IMAGE'
     values 'alpine'
    }
   }
