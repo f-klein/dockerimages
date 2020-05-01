@@ -23,6 +23,7 @@ pipeline {
  }
 
 stages {
+stage('Build Docker images') {
 
  matrix {
   axes {
@@ -67,6 +68,7 @@ stages {
     }
    }
   }
+ }
  }
  }
 
