@@ -32,15 +32,6 @@ stage('Build Docker images') {
   }
 
   stages {
-   stage('Show environment') {
-    steps {
-     echo "Job base name = $JOB_BASE_NAME"
-     echo "Today = $TODAY"
-     echo "Prefix = $PREFIX"
-     echo "Push = $PUSH"
-     sh "printenv"
-    }
-   }
 
 stage('Sequential build') {
 stages {
@@ -48,14 +39,14 @@ stages {
    stage('Build Docker image') {
     steps {
      script {
-      sh "docker build --no-cache --rm --force-rm -t ${PREFIX}/${IMAGE}:${TODAY} ./${IMAGE}"
+      sh "docker build --no-cache --rm --force-rm -t ${PREFIX}/${IMAGE}:${TODAY} -t ${PREFIX}/${IMAGE}:latest ./${IMAGE}"
      }
     }
    }
 
    stage('Test Docker image') {
     steps {
-     sh 'docker run --rm ${PREFIX}/${IMAGE}:${TODAY} /bin/busybox id'
+     sh 'docker run --entrypoint="" --rm ${PREFIX}/${IMAGE}:${TODAY} /bin/echo OK'
     }
    }
 
