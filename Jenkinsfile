@@ -4,7 +4,7 @@ pipeline {
  environment {
   TODAY = """${sh(
    returnStdout: true,
-   script: 'echo -ne `date +%Y%m%d`'
+   script: '/bin/echo -ne `date +%Y%m%d`'
   )}"""
  }
 
