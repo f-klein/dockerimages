@@ -27,7 +27,7 @@ stage('Build Docker images') {
   axes {
    axis {
     name 'IMAGE'
-    values 'alpine', 'squid'
+    values 'squid'
    }
   }
 
