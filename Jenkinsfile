@@ -6,8 +6,6 @@ pipeline {
    returnStdout: true,
    script: '/bin/echo -ne `date +%Y%m%d`'
   )}"""
-
-  PREFIX	= "kleinf"
  }
 
  parameters {
@@ -38,8 +36,8 @@ stage('Build Docker images') {
     steps {
      echo "Job base name = $JOB_BASE_NAME"
      echo "Today = $TODAY"
-     echo "Prefix = ${params.PREFIX}"
-     echo "Push = ${params.PUSH}"
+     echo "Prefix = $PREFIX"
+     echo "Push = $PUSH"
      sh "printenv"
     }
    }
@@ -60,7 +58,7 @@ stage('Build Docker images') {
 
    stage('Push Docker images to repository') {
     when {
-     environment name: 'params.PUSH', value: 'true'
+     environment name: 'PUSH', value: 'true'
     }
     steps {
      script {
